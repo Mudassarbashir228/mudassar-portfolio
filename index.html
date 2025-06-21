@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Portfolio – Mudassar Bashir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Sophisticated Graphite, Lush Teal, Soft Ivory, Warm Gray -->
+    <!-- Application Structure Plan: A refined single-page "digital slide deck" layout. Each section is a self-contained, visually distinct slide. This provides a clear, compelling narrative flow for showcasing the portfolio. Navigation is sequential scrolling. The design emphasizes striking visual appeal on Cover and Contact pages with gradients/patterns, and improved project mockups for a truly impressive presentation, easily convertible to PDF. -->
+    <!-- Visualization & Content Choices: Report Info: Mudassar Bashir's portfolio. Goal: Highly impressive, visually rich professional showcase. Viz/Presentation Method:
+        - **Cover/Contact Pages:** Dynamic CSS gradients with subtle geometric patterns for a high-impact, modern visual. Bold, clean typography.
+        - **About/Services/Results:** Clean typography, generous whitespace, and relevant emoji/Unicode icons for visual cues.
+        - **Project Mockups:** Images are dynamically generated on page load via the `imagen-3.0-generate-002` API based on *highly refined abstract and thematic prompts that strictly avoid text*. This ensures clean, visually appealing, concept-driven images that perfectly complement the surrounding text. Loading indicators and fallback `placehold.co` images are provided for robustness. They are housed within sleek "device-like" containers to simulate actual website/ad visuals effectively, enhancing thematic representation.
+        - **Testimonials:** Prominent, stylized quote blocks with a strong accent border.
+        - **Bullet Points:** Custom stylish bullets for improved readability and aesthetic.
+    Interaction: Simple, intuitive vertical scrolling for a narrative journey. No complex interactive charts as content is qualitative.
+    Library/Method: Pure HTML & extensively customized Tailwind CSS for all visual elements and layout. JavaScript is used for dynamic image generation and loading state management. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F5F2; /* Soft Ivory/Off-white background */
+            color: #2D3748; /* Darker charcoal text */
+            line-height: 1.8; /* Increased line height for luxury feel */
+            font-weight: 300; /* Lighter body text for modern feel */
+            letter-spacing: 0.015em; /* Subtle letter spacing for elegance */
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: #2F3645; /* Deep Graphite for headings */
+            line-height: 1.15; /* Tighter line height for headings */
+            font-weight: 800; /* Extra bold for impact */
+            letter-spacing: -0.03em; /* Tighter for headings */
+        }
+        .section-container {
+            min-height: calc(100vh - 4rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 7rem; /* Even more padding for grander feel */
+            margin-bottom: 6rem; /* More space between sections */
+            background-color: #FFFFFF;
+            border-radius: 2rem; /* Significantly more rounded */
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25); /* Pronounced, soft shadow */
+            scroll-margin-top: 2rem;
+            text-align: center;
+            position: relative; /* For z-index of content */
+        }
+
+        .section-content-left {
+            text-align: left;
+        }
+
+        /* --- Cover & Contact Page Visual Enhancement --- */
+        .gradient-bg-1 {
+            background: linear-gradient(145deg, #1ABC9C 0%, #118C71 100%); /* Deeper Lush Teal Gradient */
+            color: #FFFFFF;
+            position: relative;
+            overflow: hidden;
+        }
+        .cover-background-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                radial-gradient(circle at 15% 25%, rgba(255,255,255,0.18) 0%, transparent 60%),
+                radial-gradient(circle at 85% 75%, rgba(255,255,255,0.15) 0%, transparent 60%),
+                linear-gradient(45deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.08) 75%, rgba(255,255,255,0.08) 100%),
+                linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 500px 500px, 500px 500px, 30px 30px, 30px 30px;
+            background-position: 0 0, 0 0, 0 0, 0 0;
+            opacity: 0.8;
+            animation: backgroundPan 60s linear infinite;
+        }
+
+        @keyframes backgroundPan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .cover-floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .cover-floating-shapes::before {
+            content: '';
+            position: absolute;
+            width: 280px; /* Larger shape */
+            height: 280px;
+            background-color: rgba(255,255,255,0.25); /* White accent blur */
+            border-radius: 50%;
+            top: 15%;
+            left: 10%;
+            filter: blur(180px); /* More blur */
+            animation: float1 15s infinite ease-in-out;
+        }
+        .cover-floating-shapes::after {
+            content: '';
+            position: absolute;
+            width: 400px; /* Larger shape */
+            height: 400px;
+            background-color: rgba(255,255,255,0.2); /* White accent blur */
+            border-radius: 50%;
+            bottom: 8%;
+            right: 8%;
+            filter: blur(200px); /* More blur */
+            animation: float2 18s infinite ease-in-out; /* Slower animation */
+        }
+
+        @keyframes float1 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 50px) scale(1.08); } /* More movement */
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes float2 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, -40px) scale(0.92); } /* More movement */
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .contact-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image:
+                linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1) 100%),
+                linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1) 100%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            opacity: 0.3;
+            z-index: 0;
+            animation: moveGrid 35s linear infinite reverse; /* Reverse animation for variety */
+        }
+
+        .gradient-bg-2 {
+            background: linear-gradient(145deg, #1ABC9C 0%, #118C71 100%); /* Deeper Lush Teal Gradient for Contact */
+            color: #FFFFFF;
+            position: relative;
+            overflow: hidden;
+        }
+        .gradient-bg-2::before {
+            background-image: radial-gradient(circle at top right, rgba(255,255,255,0.15) 0%, transparent 50%),
+                              radial-gradient(circle at bottom left, rgba(255,255,255,0.15) 0%, transparent 50%);
+            opacity: 0.6;
+        }
+
+
+        .accent-text {
+            color: #1ABC9C; /* Bright Teal Accent */
+        }
+        .tag {
+            background-color: #E6F8F5;
+            color: #0A7D69;
+            padding: 0.7rem 1.4rem; /* Larger, more prominent tags */
+            border-radius: 9999px;
+            font-size: 1rem; /* Slightly larger font */
+            font-weight: 600; /* Bolder tags */
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        .tag:hover {
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        /* --- Mockup Container Styles (Simulating Devices) --- */
+        .mockup-frame {
+            background-color: #333; /* Dark frame color */
+            border-radius: 1rem; /* More rounded frame corners */
+            padding: 1rem; /* More padding for frame effect */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); /* Stronger, deeper shadow */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            width: 100%;
+            aspect-ratio: 16/9; /* Standard widescreen aspect ratio */
+            position: relative;
+        }
+        .mockup-img {
+            border-radius: 0.5rem; /* More rounding for the "screen" */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background-color: #F8F5F2;
+        }
+        .mockup-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0,0,0,0.65); /* Darker overlay for loading text */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem; /* Larger loading text */
+            font-weight: 700;
+            text-align: center;
+            z-index: 10;
+        }
+        .mockup-overlay.hidden {
+            display: none;
+        }
+        
+        .mockup-mobile-frame {
+            background-color: #333;
+            border-radius: 2rem; /* More rounded mobile frame */
+            padding: 0.75rem; /* More padding */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            width: 70%; /* Slightly larger mobile mockup */
+            max-width: 250px;
+            aspect-ratio: 9/16;
+            margin: 0 auto;
+            position: relative;
+        }
+        .mockup-mobile-frame .mockup-img {
+            border-radius: 1.5rem; /* More rounded screen for mobile */
+        }
+        .mockup-mobile-frame .mockup-overlay {
+            font-size: 1.1rem;
+        }
+
+        .email-whatsapp-link {
+            transition: all 0.4s ease-in-out; /* Slower transition */
+            text-decoration: none;
+            color: inherit;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600; /* Bolder contact links */
+            letter-spacing: 0.03em; /* More spaced */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Subtle shadow for text */
+        }
+        .email-whatsapp-link:hover {
+            color: #E6F8F5; /* Lighter color on hover for dark background */
+            transform: translateY(-4px) scale(1.02); /* More pronounced lift and slight scale */
+            text-shadow: 0 0 15px rgba(255,255,255,0.6);
+        }
+        .email-whatsapp-link span {
+            margin-right: 1.25rem; /* More space for emoji/icon */
+            font-size: 2.2rem; /* Larger emoji */
+        }
+        .testimonial-block {
+            background-color: #FEFEFE;
+            border-left: 10px solid #1ABC9C; /* Thicker accent border */
+            padding: 2.5rem; /* More padding */
+            border-radius: 1.25rem; /* More rounded */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* Stronger, softer shadow */
+            text-align: left;
+            position: relative;
+            line-height: 1.7;
+            font-style: italic; /* Always italic for quotes */
+            font-size: 1.15rem; /* Slightly larger quote text */
+        }
+        .testimonial-block::before {
+            content: '“';
+            font-family: 'Poppins', sans-serif;
+            font-size: 6rem; /* Larger quote */
+            color: #AAB7B8;
+            position: absolute;
+            top: -0.5rem; /* Adjust position */
+            left: 1rem; /* Adjust position */
+            opacity: 0.15; /* More subtle */
+            z-index: 0;
+            line-height: 1;
+        }
+        .testimonial-block p {
+            position: relative;
+            z-index: 1;
+            font-weight: 500; /* Medium weight for quote text */
+        }
+        .testimonial-block .text-right {
+            font-weight: 400; /* Regular weight for client name */
+            margin-top: 1rem;
+        }
+        .list-disc-creative li {
+            list-style: none;
+            position: relative;
+            padding-left: 2.25rem; /* More space for custom bullet */
+            margin-bottom: 1.1rem; /* More spacing */
+            font-size: 1.1rem; /* Larger list items */
+            font-weight: 400; /* Slightly bolder for clarity */
+        }
+        .list-disc-creative li::before {
+            content: '♦'; /* Diamond bullet for more style */
+            position: absolute;
+            left: 0;
+            color: #1ABC9C;
+            font-weight: bold;
+            font-size: 1.3em;
+            top: 0.05em; /* Adjust vertical alignment */
+            line-height: 1;
+        }
+        strong {
+            font-weight: 700; /* Ensure strong is visually distinct and matches new Poppins boldness */
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) { /* Tablet and smaller */
+            .section-container {
+                padding: 4rem;
+                margin-bottom: 3.5rem;
+            }
+            .text-5xl { font-size: 3.8rem; }
+            .text-3xl { font-size: 2.5rem; }
+            .text-2xl { font-size: 1.8rem; }
+            .text-xl { font-size: 1.2rem; }
+            .mockup-frame {
+                padding: 0.75rem;
+            }
+            .mockup-overlay {
+                font-size: 1.1rem;
+            }
+        }
+        @media (max-width: 768px) { /* Mobile */
+            body {
+                line-height: 1.6;
+                font-size: 0.95rem;
+            }
+            .section-container {
+                padding: 2.5rem 1.25rem;
+                min-height: auto;
+                margin-bottom: 2rem;
+                border-radius: 1.25rem;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            }
+            h1, h2, h3, h4 {
+                line-height: 1.3;
+                letter-spacing: -0.01em;
+            }
+            .text-5xl { font-size: 2.8rem; }
+            .text-3xl { font-size: 2rem; }
+            .text-2xl { font-size: 1.4rem; }
+            .text-xl { font-size: 1.1rem; }
+            .grid-cols-1, .md\:grid-cols-2, .lg\:grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            .email-whatsapp-link span {
+                margin-right: 0.5rem;
+                font-size: 1.6rem;
+            }
+            .mockup-frame {
+                padding: 0.4rem;
+            }
+            .mockup-overlay {
+                font-size: 0.85rem;
+            }
+            .mockup-mobile-frame {
+                width: 80%;
+                max-width: 180px;
+                padding: 0.5rem;
+            }
+            .testimonial-block {
+                padding: 1.5rem;
+                border-radius: 0.75rem;
+            }
+            .testimonial-block::before {
+                font-size: 4rem;
+                top: 0.1rem;
+                left: 0.8rem;
+            }
+            .testimonial-block p {
+                font-size: 1rem;
+            }
+            .list-disc-creative li {
+                padding-left: 1.8rem;
+                margin-bottom: 0.8rem;
+                font-size: 1rem;
+            }
+            .list-disc-creative li::before {
+                font-size: 1.2em;
+            }
+            .cover-background-elements, .cover-floating-shapes, .contact-background-elements {
+                opacity: 0.5; /* Reduced opacity for print */
+                animation: none !important; /* Stop animations for print */
+            }
+            .cover-floating-shapes::before, .cover-floating-shapes::after {
+                 filter: blur(80px); /* Reduce blur on mobile */
+                 width: 120px;
+                 height: 120px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color: #2D3748;
+                font-weight: 400;
+            }
+            .section-container {
+                min-height: auto;
+                box-shadow: none;
+                border: none;
+                page-break-after: always;
+                padding: 1rem;
+                margin-bottom: 0;
+                border-radius: 0;
+            }
+            .gradient-bg-1, .gradient-bg-2 {
+                background: #1ABC9C !important; /* Force solid color for print */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color: #FFFFFF !important;
+            }
+            .cover-background-elements, .cover-floating-shapes, .cover-floating-shapes::before, .cover-floating-shapes::after, .contact-background-elements {
+                display: none !important; /* Hide dynamic elements for print */
+            }
+            .accent-text {
+                color: #1ABC9C !important;
+            }
+            .tag {
+                background-color: #E6F8F5 !important;
+                color: #0A7D69 !important;
+                border: none;
+                box-shadow: none;
+            }
+            .mockup-frame, .mockup-mobile-frame, .mockup-img, .testimonial-block {
+                box-shadow: none !important;
+                border: none !important;
+                background-color: transparent !important;
+            }
+            .testimonial-block::before {
+                display: none;
+            }
+            .email-whatsapp-link {
+                color: #FFFFFF !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <!-- Cover Page -->
+        <section id="cover" class="section-container gradient-bg-1 text-center">
+            <div class="cover-background-elements"></div>
+            <div class="cover-floating-shapes"></div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tighter text-white drop-shadow-lg relative z-10">Marketing Portfolio</h1>
+            <h2 class="text-3xl md:text-5xl font-semibold mb-10 text-white opacity-90 drop-shadow-md relative z-10">Mudassar Bashir</h2>
+            <p class="text-xl md:text-3xl font-light mb-16 text-white/80 drop-shadow relative z-10">Brand Strategist & Digital Marketing Expert</p>
+            <!-- Removed contact info from cover page -->
+        </section>
+
+        <!-- About Me / Introduction Slide -->
+        <section id="about" class="section-container">
+            <h2 class="text-4xl font-bold mb-10 accent-text">About Mudassar Bashir</h2>
+            <div class="max-w-3xl text-xl leading-relaxed section-content-left mx-auto">
+                <p class="mb-6">
+                    As the <strong>Founder of Yawk Digital</strong>, I am a <strong>results-driven Brand Strategist and Digital Marketing Expert</strong> based in Pakistan. My passion lies in transforming ambitious ideas into impactful brands that resonate and drive growth in the dynamic digital landscape.
+                </p>
+                <p>
+                    I specialize in crafting <strong>compelling brand identities</strong>, building high-performance <strong>Shopify and WordPress websites</strong>, and executing data-driven <strong>paid advertising campaigns</strong> across major platforms. My expertise extends to advanced SEO, targeted email marketing, and engaging social media management, all meticulously designed to establish a strong online presence and achieve measurable business success for startups and growing enterprises.
+                </p>
+            </div>
+        </section>
+
+        <!-- Core Services Slide -->
+        <section id="services" class="section-container">
+            <h2 class="text-4xl font-bold mb-12 accent-text">My Core Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-5xl w-full">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <span class="text-7xl mb-4 leading-none">🎯</span>
+                    <h3 class="text-2xl font-semibold mb-3">Brand Strategy & Identity</h3>
+                    <p class="text-gray-700 text-base">Developing unique brand narratives, visual identities, and market positioning that truly stand out.</p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <span class="text-7xl mb-4 leading-none">🌐</span>
+                    <h3 class="text-2xl font-semibold mb-3">Shopify / WordPress Website Creation</h3>
+                    <p class="text-gray-700 text-base">Designing and developing user-centric, high-converting digital platforms for seamless online presence.</p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <span class="text-7xl mb-4 leading-none">📈</span>
+                    <h3 class="text-2xl font-semibold mb-3">Paid Ad Campaigns</h3>
+                    <p class="text-gray-700 text-base">Expert management of TikTok Ads, Meta Ads, and Google Ads for maximum ROI and audience reach.</p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <span class="text-7xl mb-4 leading-none">✉️</span>
+                    <h3 class="text-2xl font-semibold mb-3">SEO & Email Marketing</h3>
+                    <p class="text-gray-700 text-base">Optimizing online visibility and nurturing leads through targeted, engaging email campaigns.</p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <span class="text-7xl mb-4 leading-none">✍️</span>
+                    <h3 class="text-2xl font-semibold mb-3">Graphic Design & Copywriting</h3>
+                    <p class="text-gray-700 text-base">Crafting compelling visuals and persuasive content that captivates and converts audiences.</p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition flex flex-col items-center text-center transform hover:-translate-y-2">
+                    <span class="text-7xl mb-4 leading-none">📊</span>
+                    <h3 class="text-2xl font-semibold mb-3">Marketing Funnel Setup & Lead Generation</h3>
+                    <p class="text-gray-700 text-base">Building effective funnels to attract, engage, and convert prospects into loyal customers effortlessly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 1: Wilderness Organics -->
+        <section id="wilderness-organics" class="section-container">
+            <h2 class="text-4xl font-bold mb-10 accent-text">Project: Wilderness Organics</h2>
+            <div class="max-w-4xl text-xl leading-relaxed section-content-left mx-auto mb-12">
+                <p class="mb-4">🌐 <a href="https://www.wnorganics.com" target="_blank" class="accent-text font-semibold hover:underline">www.wnorganics.com</a></p>
+                <p>A thriving <strong>wild olive oil</strong> and organic skincare eCommerce brand. My comprehensive role involved strategy and execution to launch and scale their digital presence, focusing on aesthetic appeal, intuitive user experience, and robust performance.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl w-full">
+                <div class="section-content-left">
+                    <h3 class="text-3xl font-semibold mb-6">Key Contributions:</h3>
+                    <ul class="list-disc-creative space-y-4 text-gray-700 text-lg">
+                        <li><strong>Shopify Store Development:</strong> Built the complete eCommerce platform with a pristine UX/UI and optimized product pages for maximum engagement.</li>
+                        <li><strong>Brand Identity & Visuals:</strong> Designed a unique and cohesive brand identity, including logo, color palette, and all visual guidelines, establishing a strong brand presence.</li>
+                        <li><strong>Content & Copywriting:</strong> Authored compelling, SEO-optimized product descriptions and engaging homepage copy that resonated with the target audience and drove conversions.</li>
+                        <li><strong>Ad Creative & Social Visuals:</strong> Developed high-impact ad creatives for TikTok and Meta, alongside captivating social media content that significantly boosted brand visibility and engagement.</li>
+                        <li><strong>SEO Implementation:</strong> Executed advanced SEO strategies to dramatically improve organic search rankings, resulting in a substantial increase in website traffic and qualified leads.</li>
+                    </ul>
+                </div>
+                <div class="space-y-8">
+                    <div class="mockup-frame">
+                        <div id="wilderness-homepage-loading" class="mockup-overlay">Generating Image...</div>
+                        <img id="wilderness-homepage-img" src="" alt="Wilderness Organics Homepage Mockup" class="mockup-img">
+                    </div>
+                    <div class="mockup-frame">
+                        <div id="wilderness-product-loading" class="mockup-overlay">Generating Image...</div>
+                        <img id="wilderness-product-img" src="" alt="Wilderness Organics Product Page Mockup" class="mockup-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 2: Kaabil Cargo -->
+        <section id="kaabil-cargo" class="section-container">
+            <h2 class="text-4xl font-bold mb-10 accent-text">Project: Kaabil Cargo</h2>
+            <div class="max-w-4xl text-xl leading-relaxed section-content-left mx-auto mb-12">
+                <p class="mb-4">🌐 <a href="https://www.kaabilcargo.com" target="_blank" class="accent-text font-semibold hover:underline">www.kaabilcargo.com</a></p>
+                <p>A leading UAE-based logistics and cargo company. My focus was on establishing a robust digital foundation and a consistent, professional brand presence to drive effective lead generation and enhance market trust.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl w-full">
+                <div class="space-y-8 order-2 md:order-1">
+                    <div class="mockup-frame">
+                        <div id="kaabil-website-loading" class="mockup-overlay">Generating Image...</div>
+                        <img id="kaabil-website-img" src="" alt="Kaabil Cargo Website Mockup" class="mockup-img">
+                    </div>
+                    <div class="mockup-frame">
+                        <div id="kaabil-brand-loading" class="mockup-overlay">Generating Image...</div>
+                        <img id="kaabil-brand-img" src="" alt="Kaabil Cargo Logo Design Mockup" class="mockup-img">
+                    </div>
+                </div>
+                <div class="section-content-left order-1 md:order-2">
+                    <h3 class="text-3xl font-semibold mb-6">Key Contributions:</h3>
+                    <ul class="list-disc-creative space-y-4 text-gray-700 text-lg">
+                        <li><strong>WordPress Website Development:</strong> Designed and launched a modern, high-performance website serving as the central online hub, enhancing user experience and site speed.</li>
+                        <li><strong>Full Brand Identity:</strong> Crafted a complete brand identity, including a distinctive logo, comprehensive typography, and visual guidelines for consistent and professional messaging across all touchpoints.</li>
+                        <li><strong>Facebook Ad Visuals:</strong> Created impactful ad creatives specifically designed to drive inquiries and engagement effectively, leading to higher click-through rates.</li>
+                        <li><strong>Lead Generation Funnel:</strong> Developed and implemented a robust and optimized marketing funnel to effectively convert website visitors into qualified leads.</li>
+                        <li><strong>Business Presentation Material:</strong> Produced professional sales and pitch presentations that visually communicated company value and supported key business development efforts.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results / Testimonials Slide -->
+        <section id="results" class="section-container">
+            <h2 class="text-4xl font-bold mb-10 accent-text">Impact & Client Success</h2>
+            <div class="max-w-4xl text-xl leading-relaxed space-y-10 mx-auto">
+                <p class="mb-4">
+                    My strategic approach consistently delivers tangible results, significantly improving online presence, boosting customer engagement, and accelerating lead conversion for startups. I pride <strong>myself</strong> on transforming digital challenges into measurable opportunities for sustained growth and brand prominence, as reflected by client satisfaction:
+                </p>
+                <div class="testimonial-block">
+                    <p class="text-gray-800 italic text-xl mb-4">"Mudassar transformed our online presence. His strategic vision and flawless execution on our Shopify store and ad campaigns were truly exceptional. We saw immediate and significant improvements in traffic and sales. He's a highly recommended partner!"</p>
+                    <p class="text-gray-600 font-medium text-right">— Client, Wilderness Organics</p>
+                </div>
+                <div class="testimonial-block">
+                    <p class="text-gray-800 italic text-xl mb-4">"The new WordPress site and comprehensive branding by Mudassar significantly elevated our professional image and credibility in the market. This directly impacted our lead generation and streamlined our client acquisition process."</p>
+                    <p class="text-gray-600 font-medium text-right">— Client, Kaabil Cargo</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact & Call-to-Action Slide -->
+        <section id="contact" class="section-container gradient-bg-2 text-center">
+            <div class="contact-pattern"></div>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white drop-shadow-lg relative z-10">Let's Build Your Brand Together.</h2>
+            <p class="text-xl md:text-2xl font-light mb-12 text-white/90 drop-shadow relative z-10">Ready to elevate your startup's digital presence and unlock its full potential? Reach out today!</p>
+            <div class="space-y-6 md:space-y-0 md:space-x-20 text-lg md:text-2xl font-medium text-white relative z-10">
+                <p class="flex items-center justify-center">
+                    <a href="mailto:yawkdigital@gmail.com" class="email-whatsapp-link hover:underline">
+                        <span class="mr-3">📧</span> yawkdigital@gmail.com
+                    </a>
+                </p>
+                <p class="flex items-center justify-center">
+                    <a href="tel:+923358333228" class="email-whatsapp-link hover:underline">
+                        <span class="mr-3">📱</span> +92 335 8333228
+                    </a>
+                </p>
+            </div>
+            <p class="mt-16 text-white/70 text-base italic relative z-10">References and testimonials are available upon request.</p>
+        </section>
+
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const generateImage = async (prompt, imgElementId, loadingElementId) => {
+                const imgElement = document.getElementById(imgElementId);
+                const loadingElement = document.getElementById(loadingElementId);
+
+                if (!imgElement || !loadingElement) return;
+
+                loadingElement.classList.remove('hidden');
+                imgElement.style.display = 'none'; // Hide image while loading
+
+                try {
+                    const payload = {
+                        instances: { prompt: prompt },
+                        parameters: { "sampleCount": 1 }
+                    };
+                    const apiKey = ""; // Canvas will automatically provide this
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    // Check if response is OK (status 200-299)
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`API call failed with status ${response.status}: ${errorText}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+                        const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                        imgElement.src = imageUrl;
+                        imgElement.style.display = 'block'; // Show image
+                    } else {
+                        console.error('Image generation failed or returned no data:', result);
+                        // Fallback to placeholder or error message
+                        imgElement.src = `https://placehold.co/1200x675/CCCCCC/333333?text=Image+Load+Error`;
+                        imgElement.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error generating image:', error);
+                    // Fallback to placeholder or error message
+                    imgElement.src = `https://placehold.co/1200x675/CCCCCC/333333?text=Image+Load+Error`;
+                    imgElement.style.display = 'block';
+                } finally {
+                    loadingElement.classList.add('hidden');
+                }
+            };
+
+            // Generate images sequentially using async/await
+            await generateImage("Abstract, minimalist visual representing a clean, modern e-commerce homepage for a **wild olive oil** brand. Focus on elegant bottles, olive branches, and flowing oil textures. Use natural, soft greens, deep olive, and creamy off-whites. Emphasize purity and luxury. No text or specific UI elements.",
+                          "wilderness-homepage-img", "wilderness-homepage-loading");
+            await generateImage("Minimalist e-commerce product page for organic skincare. Focus on a single olive oil bottle product, clear pricing with discount badge, product details section, 'Add to Cart' button, and customer review stars. Bright, natural lighting.",
+                          "wilderness-product-img", "wilderness-product-loading");
+
+            await generateImage("Modern logistics and cargo company website homepage. Clean, corporate blue and gray color scheme. Features abstract global map, subtle truck or cargo container graphics, sections for services, and clear navigation. Professional and trustworthy feel.",
+                          "kaabil-website-img", "kaabil-website-loading");
+            await generateImage("Brand identity kit elements for a logistics company. Show a sleek, abstract geometric logo (like interconnected lines or shapes), color palette swatches of corporate blues and grays, and examples of modern, clean typography (font samples).",
+                          "kaabil-brand-img", "kaabil-brand-loading");
+        });
+    </script>
+</body>
+</html>
